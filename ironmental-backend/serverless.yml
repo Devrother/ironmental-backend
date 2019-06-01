@@ -1,9 +1,10 @@
 service:
-  name: sls-practice
+  name: api-ironmental
 
 # Add the serverless-webpack plugin
 plugins:
   - serverless-webpack
+  - serverless-dotenv-plugin
 
 provider:
   name: aws
@@ -35,13 +36,31 @@ functions:
       - http:
           path: /
           method: ANY
-          cors: true
+          cors:
+            origin: '*' # <-- Specify allowed origin
+            headers: # <-- Specify allowed headers
+              - Content-Type
+              - X-Amz-Date
+              - Authorization
+              - X-Api-Key
+              - X-Amz-Security-Token
+              - X-Amz-User-Agent
+            allowCredentials: True
       - http:
           path: /{any+}
           method: ANY
-          cors: true
+          cors:
+            origin: '*' # <-- Specify allowed origin
+            headers: # <-- Specify allowed headers
+              - Content-Type
+              - X-Amz-Date
+              - Authorization
+              - X-Api-Key
+              - X-Amz-Security-Token
+              - X-Amz-User-Agent
+            allowCredentials: True
     vpc:
       securityGroupIds:
-        - sg-05ea579a744564530
+        - sg-0b4effb78a6986a68
       subnetIds:
-        - subnet-56aef61b
+        - subnet-6bcbb527

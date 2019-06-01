@@ -9,28 +9,38 @@ export const listInterviews = async (req, res) => {
     let limitNum = parseInt(req.query.limit) || 4
     let offsetNum = parseInt(req.query.offset) || 0
 
-    
+
     // TODO: 리펙토링
-    let interviews
-    
+    // let interviews
+
     if (!tagName || tagName === 'all') {
-        interviews = await Interview.find().skip(offsetNum).limit(limitNum)
-    } else {
-        interviews = await Tag.findOne({ name: tagName }, 'interviews').populate({
-            path:'interviews',
-            options: {
-                limit: 2,
-                sort: { createdAt: -1 },
-                skip: 0 //offset
-        }})
+        const interviews = await Interview.find().skip(offsetNum).limit(limitNum)
+        return res.send(interviews)
     }
-    
-    res.send(interviews)
+
+    const interviewsInTag = await Tag.findOne({ name: tagName }, 'interviews').populate({
+        path: 'interviews',
+        options: {
+            limit: limitNum,
+            sort: { createdAt: -1 },
+            skip: offsetNum
+        }
+    })
+    let result = []
+    for (let interview of interviewsInTag.interviews) {
+        result.push(interview)
+    }
+
+    res.send(result)
 
 }
 
 export const showInterview = async (req, res) => {
-    res.send("해당 id interview 보여준다.")
+    // GET /interviews/:id
+
+    const interview = await Interview.find({_id: req.params.id})
+    
+    res.send(interview)
 }
 
 export const createInterview = async (req, res) => {
@@ -51,7 +61,7 @@ export const createInterview = async (req, res) => {
                 name: tag,
                 interviews: [interviewId]
             })
-            
+
             await newTag.save()
         } else {
             await Tag.findOneAndUpdate({ name: tag }, {
@@ -59,9 +69,9 @@ export const createInterview = async (req, res) => {
                     interviews: interviewId
                 }
             })
-            
+
         }
-        
+
     }
     res.status(500).send({
         message: "Success"
