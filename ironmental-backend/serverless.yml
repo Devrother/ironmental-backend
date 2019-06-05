@@ -37,30 +37,33 @@ functions:
           path: /
           method: ANY
           cors:
-            origin: '*' # <-- Specify allowed origin
-            headers: # <-- Specify allowed headers
+            origin: 'https://ironmental.net'
+            headers:
+              - Cookie
               - Content-Type
               - X-Amz-Date
               - Authorization
               - X-Api-Key
               - X-Amz-Security-Token
               - X-Amz-User-Agent
-            allowCredentials: True
+            allowCredentials: true
       - http:
           path: /{any+}
           method: ANY
           cors:
-            origin: '*' # <-- Specify allowed origin
-            headers: # <-- Specify allowed headers
+            origin: 'https://ironmental.net'
+            headers:
+              - Cookie
               - Content-Type
               - X-Amz-Date
               - Authorization
               - X-Api-Key
               - X-Amz-Security-Token
               - X-Amz-User-Agent
-            allowCredentials: True
-    vpc:
-      securityGroupIds:
-        - sg-0b4effb78a6986a68
-      subnetIds:
-        - subnet-6bcbb527
+            allowCredentials: true
+    # vpc:
+    #   securityGroupIds:
+    #     - sg-0b4effb78a6986a68
+    #   subnetIds:
+    #     - subnet-6bcbb527
+    #     - subnet-34848e5c
