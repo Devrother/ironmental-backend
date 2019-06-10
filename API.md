@@ -1,10 +1,12 @@
 # Interview
+
 ## Show All Interviews
+
 Returns json datas about all interviews.
 
 * **URL**
 
-    /interviews
+    `/interviews`
 
 * **Method**
 
@@ -23,54 +25,68 @@ Returns json datas about all interviews.
     `None`
 
 * **Success Response**
-    - **Code**: 200
+    * *Code*: `200`
 
-      **Content**:
-
-~~~json
-{
-    "data": [
-        {
-            "tags": [ "vue", "react"],
-            "_id": "5cf1423357cd510271cd9289",
-            "question": "question example",
-            "answer": "answer example",
-            "createdAt": "2019-05-31T15:03:15.726Z",
-            "updateAt": "2019-05-31T15:03:15.727Z",
-            "__v": 0,
-        },
-        {
-            "tags": [ "vue" ],
-            "_id": "5cf1427257cd512221cd928c",
-            "question": "question example2",
-            "answer": "answer example2",
-            "createdAt": "2019-05-31T15:04:18.294Z",
-            "updateAt": "2019-05-31T15:04:18.294Z",
-            "__v": 0,
-        },
-    ],
-    "links": [
-        {
-            "rel": "prev",
-            "href": null
-        },
-        {
-            "rel": "next",
-            "href": "https://api.ironmental.net/interviews?tag={tag}&limit=4&offset=4"
+    ```json
+    {
+        "datas": [
+            {
+                "tags": [ "vue", "react"],
+                "_id": "5cf1423357cd510271cd9289",
+                "question": "question example",
+                "answer": "answer example",
+                "createdAt": "2019-05-31T15:03:15.726Z",
+                "updateAt": "2019-05-31T15:03:15.727Z",
+                "__v": 0,
+            },
+            {
+                "tags": [ "vue" ],
+                "_id": "5cf1427257cd512221cd928c",
+                "question": "question example2",
+                "answer": "answer example2",
+                "createdAt": "2019-05-31T15:04:18.294Z",
+                "updateAt": "2019-05-31T15:04:18.294Z",
+                "__v": 0,
+            },
+        ],
+        "links": {
+            "prev": null,
+            "next": "https://api.ironmental.net/interviews?tag={tag}&limit=4&offset=4"
         }
-    ]
-}
+    }
+    ```
 
-~~~
+* **Error Response**
+    * *Code:* `400`
 
-* **Error Response:**
+    ``` json
+    {
+        "error" : {
+            "status" : 400,
+            "message" : "Bad Request"
+        }
+    }
+    ```
+
+    * *Code:* `500`
+    
+    ```json
+    {
+        "error" : {
+            "status" : 500,
+            "message" : "Internal Server Error"
+        }
+    }
+    ```
+---
 
 ## Show interview
+
 Returns json data about single interview.
 
 * **URL**
 
-    /interviews/:id
+    `/interviews/:id`
 
 * **Method**
 
@@ -85,33 +101,55 @@ Returns json data about single interview.
     `None`
 
 * **Success Response**
-    - **Code**: 200
+    * *Code*: `200`
 
-      **Content**:
+    ```json
 
-```json
+    {
+        "tags": [ "html", "nodejs"],
+        "_id": "5cf142b857cd51f683cd928e",
+        "question": "DOM과node.js에 대해 설명하시오",
+        "answer": "DOM은 돔이고 node.js는 node.js다.",
+        "createdAt": "2019-05-31T15:05:28.527Z",
+        "updateAt": "2019-05-31T15:05:28.527Z",
+        "__v": 0
+    }
 
-{
-    "tags": [ "html", "nodejs"],
-    "_id": "5cf142b857cd51f683cd928e",
-    "question": "DOM과node.js에 대해 설명하시오",
-    "answer": "DOM은 돔이고 node.js는 node.js다.",
-    "createdAt": "2019-05-31T15:05:28.527Z",
-    "updateAt": "2019-05-31T15:05:28.527Z",
-    "__v": 0
-}
+    ```
 
-```
+* **Error Response**
 
-* **Error Response:**
+    * *Code:* `404`
+    
+    ```json
+    {
+        "error" : {
+            "status" : 404,
+            "message" : "Not Found"
+        }
+    }
+    ```
+
+    * *Code:* `500`
+    
+    ```json
+    {
+        "error" : {
+            "status" : 500,
+            "message" : "Internal Server Error"
+        }
+    }
+    ```
 
 # Subscriber
+
 ## Add Subscriber
+
 Inserts data about subscriber.
 
 * **URL**
 
-  /
+  `/sub`
 
 * **Method**
 
@@ -127,44 +165,61 @@ Inserts data about subscriber.
     
 
 * **Success Response**
-    - **Code**: 200
+    * *Code*: `200`
 
-      **Content**:
+        *1. 구독자 리스트에 없는 메일 주소일 경우*
 
+        ```json
 
-**1. 구독자 리스트에 없는 메일 주소일 경우**
+        {
+            "message": "인증메일을 보냈으니 확인해주세요 :)",
+            "isSub": false,
+            "isCertify": false
+        }
+        ```
 
-```json
+        *2. 구독했으나 인증이 완료되지 않은 경우*
 
-{
-    "message": "인증메일을 보냈으니 확인해주세요 :)",
-    "isSub": false,
-    "isCertify": false
-}
-```
+        ```json
 
-**2. 구독했으나 인증이 완료되지 않은 경우**
+        {
+            "message": "인증되지 않은 구독자입니다. 인증메일을 보냈으니 확인해주세요 :)",
+            "isSub": true,
+            "isCertify": false
+        }
+        ```
 
-```json
+        *3. 이미 인증이 완료된 구독자의 메일 주소일 경우*
+        ```json
+        {
+            "message": "이미 구독자입니다 :D",
+            "isSub": true,
+            "isCertify": true
+        }
+        ```
 
-{
-    "message": "인증되지 않은 구독자입니다. 인증메일을 보냈으니 확인해주세요 :)",
-    "isSub": true,
-    "isCertify": false
-}
-```
+* **Error Response**
+    * *Code:* `400`
 
-**3. 이미 인증이 완료된 구독자의 메일 주소일 경우**
-```json
-{
-    "message": "이미 구독자입니다 :D",
-    "isSub": true,
-    "isCertify": true
-}
-```
+    ```json
+    {
+        "error" : {
+            "status" : 400,
+            "message" : "Bad Reuqest"
+        }
+    }
+    ```
 
-* **Error Response:**
-
+    * *Code:* `500`
+    
+    ```json
+    {
+        "error" : {
+            "status" : 500,
+            "message" : "Internal Server Error"
+        }
+    }
+    ```
 # Tag
 ## Show All Tags
 
@@ -174,11 +229,11 @@ Returns json datas about a tags data.
 
     /tags
 
-* **Method:**
+* **Method**
 
     `GET`
   
-*  **URL Params**
+* **URL Params**
 
     `None`
  
@@ -187,31 +242,43 @@ Returns json datas about a tags data.
   
     `None`
 
-* **Success Response:**
+* **Success Response**
 
-  * **Code:** 200 <br />
-    **Content:**
+    * *Code:* `200`
 
-```json
-{
-    "tags": ["tags"]
-}
-```
+    ```json
+    {
+        "tags": ["tags"]
+    }
+    ```
+
 * **Error Response:**
+    * *Code:* `500`
+    
+    ```json
+    {
+        "error" : {
+            "status" : 500,
+            "message" : "Internal Server Error"
+        }
+    }
+    ```
 
 # Auth
+
 ## Send Confirm code
+
 Sends confirm code to check whether user already subscribes.
 
 * **URL**
 
-    /confirm
+    `/confirm`
 
 * **Method:**
 
     `POST`
   
-*  **URL Params**
+* **URL Params**
 
     `None`
    
@@ -219,17 +286,46 @@ Sends confirm code to check whether user already subscribes.
   
     `{ "confirmCode": [uuid] }`
 
-* **Success Response:**
+* **Success Response**
 
-  * **Code:** 200 <br />
-    **Content:**
+    * *Code:* `200`
+    
+    ```json
+    {
+        "message": "인증되었습니다 :D" 
+    }
+    ```
 
-```json
-{ "message": "인증되었습니다 :D" }
-```
+* **Error Response**
+    * *Code:* `400`
+    
+    ```json
+    {
+        "error" : {
+            "status" : 400,
+            "message" : "Bad Reuqest"
+        }
+    }
+    ```
 
-* **Error Response:**
+    * *Code:* `404`
+    
+    ```json
+    {
+        "error" : {
+            "status" : 404,
+            "message" : "Not Found"
+        }
+    }
+    ```
 
-```json
-{ "message": "잘못된 인증 코드입니다." }
-```
+    * *Code:* `500`
+    
+    ```json
+    {
+        "error" : {
+            "status" : 500,
+            "message" : "Internal Server Error"
+        }
+    }
+    ```
