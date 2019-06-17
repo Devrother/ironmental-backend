@@ -1,6 +1,6 @@
-import Subscriber from 'database/models/subscriber'
 import uuidv4 from 'uuid/v4'
 import sendMail from 'lib/sendMail'
+import { Subscriber } from 'database/models'
 import { MAIL_SUBJECT, CHK_MAIL_MSG, NO_CERTIFY_MSG, ALREDY_SUB_MSG } from 'messages/strings'
 import { authMailHtml } from 'messages/htmlMail'
 
@@ -41,11 +41,14 @@ export const subscribe = async (req, res) => {
     }
     
     await sendMail(createMailForm(email, MAIL_SUBJECT, html))
-    await Subscriber.findOneAndUpdate({ email: email }, { confirmCode: uuid_v4 }, { runValidators: true })
+    
+    await Subscriber.updateSubByEmail(email, uuid_v4)
+
     
     res.send(createRequest(NO_CERTIFY_MSG, true, isCertify))
 }
 
+// TODO: 확인용
 export const show = async (req, res) => {
     const subscribers = await Subscriber.find()
     res.send(subscribers)
