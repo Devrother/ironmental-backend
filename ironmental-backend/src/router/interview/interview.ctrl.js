@@ -2,6 +2,7 @@ import {
     Interview,
     Tag
 } from 'database/models'
+import { interviewListTransform, interviewTransform } from 'transformer/interviewTransformer'
 
 export const listInterviews = async (req, res) => {
     const { tag, limit, offset } = req.query;
@@ -11,19 +12,19 @@ export const listInterviews = async (req, res) => {
     let offsetNum = parseInt(offset) || 0;
 
     if (!tagName || tagName === 'all') {
+        const total = await Interview.countDocuments()
         const interviews = await Interview.findWithPagination(offsetNum, limitNum)
 
-        return res.send(interviews)
+        return res.send(interviewListTransform(interviews, { tagName, limitNum, offsetNum, total }))
     }
 
-    const interviewsInTag = await Tag.joinInterviewsByName(tagName, limitNum, offsetNum)
-    const result = Array.from(interviewsInTag.interviews)
+    const { interviews } = await Tag.joinInterviewsByName(tagName, limitNum, offsetNum)
     
-    res.send(result)
+    res.send(interviewListTransform(interviews, tag, limit, offset))
 }
 
 export const showInterview = async (req, res) => {
     const interview = await Interview.findInterviewById(req.params.id)
     
-    res.send(interview)
+    res.send(interviewTransform(interview))
 }
