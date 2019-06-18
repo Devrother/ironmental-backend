@@ -2,7 +2,7 @@ import mongoose, { Schema } from 'mongoose';
 
 const InterviewSchema = new Schema({
     createdAt: { type: Date, default: Date.now },
-    updateAt: { type: Date, default: Date.now },
+    updatedAt: { type: Date, default: Date.now },
     question: { 
         type: String,
         required: true,
