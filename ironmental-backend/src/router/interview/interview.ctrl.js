@@ -12,15 +12,16 @@ export const listInterviews = async (req, res) => {
     let offsetNum = parseInt(offset) || 0;
 
     if (!tagName || tagName === 'all') {
-        const total = await Interview.countDocuments()
+        const total = await Interview.getInterviewsCnt()
         const interviews = await Interview.findWithPagination(offsetNum, limitNum)
 
         return res.send(interviewListTransform(interviews, { tagName, limitNum, offsetNum, total }))
     }
-
+    
+    const total = await Tag.getInterviewsCntInTag()
     const { interviews } = await Tag.joinInterviewsByName(tagName, limitNum, offsetNum)
     
-    res.send(interviewListTransform(interviews, tag, limit, offset))
+    res.send(interviewListTransform(interviews, { tagName, limitNum, offsetNum, total }))
 }
 
 export const showInterview = async (req, res) => {

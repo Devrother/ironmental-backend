@@ -23,7 +23,7 @@ export const interviewListTransform = (interviews, args) => {
     }
 
     return {
-        datas: interviews.map(transform),
+        datas: interviews.map(interviewTransform),
         links: {
             prev: prevLink,
             next: nextLink

@@ -28,4 +28,8 @@ InterviewSchema.statics.findWithPagination = function(skipNum, limitNum) {
     return this.find().skip(skipNum).limit(limitNum).orFail()
 }
 
+InterviewSchema.statics.getInterviewsCnt = function() {
+    return this.countDocuments()
+}
+
 export default mongoose.model('Interview', InterviewSchema);
