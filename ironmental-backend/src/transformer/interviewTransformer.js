@@ -11,7 +11,7 @@ export const interviewListTransform = (interviews, args) => {
         case offsetNum == 0:
             prevLink = null
             break
-        case offsetNum == total:
+        case offsetNum == total-1:
             nextLink = null
             break
         case offsetNum + limitNum > total:
