@@ -27,4 +27,8 @@ TagSchema.statics.joinInterviewsByName = function(tagName, limitNum, offsetNum) 
     }).orFail()
 }
 
+TagSchema.statics.getInterviewsCntInTag = function() {
+    return this.find().select('interviews').countDocuments()
+}
+
 export default mongoose.model('Tag', TagSchema)

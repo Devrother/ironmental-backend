@@ -2,7 +2,7 @@ import mongoose, { Schema } from 'mongoose';
 
 const InterviewSchema = new Schema({
     createdAt: { type: Date, default: Date.now },
-    updateAt: { type: Date, default: Date.now },
+    updatedAt: { type: Date, default: Date.now },
     question: { 
         type: String,
         required: true,
@@ -26,6 +26,10 @@ InterviewSchema.statics.findInterviewById = function(id) {
 
 InterviewSchema.statics.findWithPagination = function(skipNum, limitNum) {
     return this.find().skip(skipNum).limit(limitNum).orFail()
+}
+
+InterviewSchema.statics.getInterviewsCnt = function() {
+    return this.countDocuments()
 }
 
 export default mongoose.model('Interview', InterviewSchema);
