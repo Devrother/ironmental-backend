@@ -37,7 +37,7 @@ functions:
           path: /
           method: ANY
           cors:
-            origin: 'https://ironmental.net'
+            origin: '*'
             headers:
               - Cookie
               - Content-Type
@@ -51,7 +51,7 @@ functions:
           path: /{any+}
           method: ANY
           cors:
-            origin: 'https://ironmental.net'
+            origin: '*'
             headers:
               - Cookie
               - Content-Type

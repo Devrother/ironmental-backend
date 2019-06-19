@@ -17,6 +17,23 @@ const SubscriberSchema = new Schema({
     }
 });
 
+SubscriberSchema.statics.updateSubByEmail = function (email, uuid_v4) {
+    return this.findOneAndUpdate(
+        { email: email }, 
+        { confirmCode: uuid_v4 }, 
+        { runValidators: true }
+    ).orFail()
+}
+
+
+SubscriberSchema.statics.updateByConfirmCode = function(code) {
+    return this.findOneAndUpdate(
+        { confirmCode: code },
+        { confirmCode: null, isCertify: true },
+        { runValidators: true }
+    ).orFail()
+}
+
 
 export default mongoose.model('Subscriber', SubscriberSchema);
 
