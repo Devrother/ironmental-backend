@@ -32,21 +32,27 @@ Returns json datas about all interviews.
         "datas": [
             {
                 "tags": [ "vue", "react"],
-                "_id": "5cf1423357cd510271cd9289",
+                "id": "5cf1423357cd510271cd9289",
                 "question": "question example",
                 "answer": "answer example",
-                "createdAt": "2019-05-31T15:03:15.726Z",
-                "updateAt": "2019-05-31T15:03:15.727Z",
-                "__v": 0,
+                "created": "2019-05-31T15:03:15.726Z",
+                "updated": "2019-05-31T15:03:15.727Z",
+                "links": {
+                    "self": "api.ironmental.net/v1/interviews/5cf1423357cd510271cd9289"
+                }
+
             },
             {
                 "tags": [ "vue" ],
-                "_id": "5cf1427257cd512221cd928c",
+                "id": "5cf1427257cd512221cd928c",
                 "question": "question example2",
                 "answer": "answer example2",
-                "createdAt": "2019-05-31T15:04:18.294Z",
-                "updateAt": "2019-05-31T15:04:18.294Z",
-                "__v": 0,
+                "created": "2019-05-31T15:04:18.294Z",
+                "updated": "2019-05-31T15:04:18.294Z",
+                "links": {
+                    "self": "api.ironmental.net/v1/interviews/5cf1427257cd512221cd928c"
+                }
+
             },
         ],
         "links": {
@@ -64,6 +70,17 @@ Returns json datas about all interviews.
         "error" : {
             "status" : 400,
             "message" : "Bad Request"
+        }
+    }
+    ```
+
+    * *Code:* `404`
+
+    ``` json
+    {
+        "error" : {
+            "status" : 404,
+            "message" : "Not Found"
         }
     }
     ```
@@ -107,12 +124,14 @@ Returns json data about single interview.
 
     {
         "tags": [ "html", "nodejs"],
-        "_id": "5cf142b857cd51f683cd928e",
+        "id": "5cf142b857cd51f683cd928e",
         "question": "DOM과node.js에 대해 설명하시오",
         "answer": "DOM은 돔이고 node.js는 node.js다.",
-        "createdAt": "2019-05-31T15:05:28.527Z",
-        "updateAt": "2019-05-31T15:05:28.527Z",
-        "__v": 0
+        "created": "2019-05-31T15:05:28.527Z",
+        "updated": "2019-05-31T15:05:28.527Z",
+        "links": {
+            "self": api.ironmental.net/v1/interviews/5cf142b857cd51f683cd928e,
+        }
     }
 
     ```
@@ -149,7 +168,7 @@ Inserts data about subscriber.
 
 * **URL**
 
-  `/sub`
+    `/sub`
 
 * **Method**
 
