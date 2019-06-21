@@ -1,9 +1,9 @@
 import express from 'express';
-import * as tagCtrl from './tag.ctrl'
-import { handleExceptions } from 'middlewares'
+import { handleExceptions } from 'middlewares';
+import * as tagCtrl from './tag.ctrl';
 
-const tag = express.Router()
+const tag = express.Router();
 
-tag.get('/', handleExceptions(tagCtrl.tagList))
+tag.get('/', handleExceptions(tagCtrl.tagList));
 
-export default tag
+export default tag;
