@@ -7,11 +7,8 @@ export default (err, req, res, next) => {
   switch (true) {
     case err instanceof DocumentNotFoundError:
     case err instanceof CastError:
-      res.status(404).send(HTTP_404_MSG);
-      break;
+      return res.status(404).send(HTTP_404_MSG);
     default:
-      res.status(500).send(HTTP_500_MSG);
-      break;
+      return res.status(500).send(HTTP_500_MSG);
   }
-  next()
 };

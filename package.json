@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "Serverless webpack example using ecma script",
   "scripts": {
-    "test": "./node_modules/.bin/jest",
+    "test": "NODE_ENV=test ./node_modules/.bin/jest",
     "eslint": "./node_modules/.bin/eslint src/**",
     "offline": "sls offline --port 5001 --skipCacheInvalidation",
     "dev": "NODE_PATH=src APP_ENV=local nodemon src/local --exec babel-node --plugins transform-es2015-modules-commonjs",
@@ -45,5 +45,15 @@
     "source-map-support": "^0.5.12",
     "striptags": "^3.1.1",
     "uuid": "^3.3.2"
+  },
+  "jest": {
+    "setupFiles": [
+      "dotenv/config"
+    ],
+    "moduleDirectories": [
+      "node_modules",
+      "src"
+    ],
+    "testEnvironment": "node"
   }
 }
