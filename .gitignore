@@ -15,3 +15,6 @@ jspm_packages
 .DS_STORE
 .env
 .env.local
+.webpack
+yarn-error.log
+junit.xml
