@@ -17,3 +17,4 @@ jspm_packages
 .env.local
 .webpack
 yarn-error.log
+junit.xml
