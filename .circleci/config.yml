@@ -17,7 +17,7 @@ jobs:
           key: v1-dependencies-{{ checksum "package.json" }}
       - run:
           name: "JavaScript Linter"
-          command: yarn lint -- --format junit -o reports/junit/js-lint-results.xml
+          command: yarn eslint -- --format junit -o reports/junit/js-lint-results.xml
       - run:
           name: "JavaScript Test Suite"
           environment:
