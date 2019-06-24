@@ -27,8 +27,7 @@ InterviewSchema.statics.findInterviewById = function(id) {
 InterviewSchema.statics.findWithPagination = function(skipNum, limitNum) {
   return this.find()
     .skip(skipNum)
-    .limit(limitNum)
-    .orFail();
+    .limit(limitNum);
 };
 
 InterviewSchema.statics.getInterviewsCnt = function() {

@@ -1,9 +1,7 @@
 const { API } = process.env;
 
-export const interviewTransform = (interview) => {
-  const {
-    _id, tags, question, answer, createdAt, updatedAt,
-  } = interview;
+export const interviewTransform = interview => {
+  const { _id, tags, question, answer, createdAt, updatedAt } = interview;
 
   return {
     tags,
@@ -13,36 +11,37 @@ export const interviewTransform = (interview) => {
     created: createdAt,
     updated: updatedAt,
     links: {
-      self: `api.ironmental.net/v1/interviews/${_id}`,
+      self: `${API}/interviews/${_id}`,
     },
   };
 };
 
 export const interviewListTransform = (interviews, args) => {
-  const {
-    offsetNum, limitNum, tagName, total,
-  } = args;
-  let prevLink = `${API}/interviews?tag=${tagName}&offset=${offsetNum
-    - limitNum}&limit=${limitNum}`;
-  let nextLink = `${API}/interviews?tag=${tagName}&offset=${offsetNum
-    + limitNum}&limit=${limitNum}`;
+  const { offsetNum, limitNum, tagName, total } = args;
+  let prevLink = `${API}/interviews?tag=${tagName}&offset=${offsetNum -
+    limitNum}&limit=${limitNum}`;
+  let nextLink = `${API}/interviews?tag=${tagName}&offset=${offsetNum +
+    limitNum}&limit=${limitNum}`;
 
   switch (true) {
     case offsetNum === 0:
       prevLink = null;
       break;
-    case offsetNum === total - 1:
+    // case offsetNum >= total - 1:
+    //   prevLink = `${API}/interviews?tag=${tagName}&offset=${total -
+    //     limitNum}&limit=${limitNum}`;
+    //   nextLink = null;
+    //   break;
+    case offsetNum + limitNum >= total:
+      prevLink = `${API}/interviews?tag=${tagName}&offset=${total -
+      limitNum}&limit=${limitNum}`;
       nextLink = null;
-      break;
-    case offsetNum + limitNum > total:
-      nextLink = `${API}/interviews?tag=${tagName}&offset=${total
-        - 1}&limit=${limitNum}`;
       break;
     case offsetNum - limitNum < 0:
       prevLink = `${API}/interviews?tag=${tagName}&offset=0&limit=${limitNum}`;
       break;
     default:
-      break
+      break;
   }
 
   return {

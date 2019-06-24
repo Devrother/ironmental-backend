@@ -3,6 +3,8 @@ import {
   interviewListTransform,
 } from './interviewTransformer';
 
+const { API } = process.env;
+
 describe('[Transformer] interviewTransformer Test', () => {
   test('interviewTransform test : ', () => {
     const interview = {
@@ -22,7 +24,7 @@ describe('[Transformer] interviewTransformer Test', () => {
       created: 'createdAt',
       updated: 'updatedAt',
       links: {
-        self: 'api.ironmental.net/v1/interviews/1',
+        self: `${API}/interviews/1`,
       },
     };
 
@@ -59,7 +61,7 @@ describe('[Transformer] interviewTransformer Test', () => {
           created: 'createdAt',
           updated: 'updatedAt',
           links: {
-            self: 'api.ironmental.net/v1/interviews/1',
+            self: `${API}/interviews/1`,
           },
         },
         {
@@ -70,13 +72,13 @@ describe('[Transformer] interviewTransformer Test', () => {
           created: 'createdAt2',
           updated: 'updatedAt2',
           links: {
-            self: 'api.ironmental.net/v1/interviews/2',
+            self: `${API}/interviews/2`,
           },
         },
       ],
       links: {
-        prev: 'api.ironmental.net/v1/interviews?tag=tag&offset=0&limit=4',
-        next: 'api.ironmental.net/v1/interviews?tag=tag&offset=7&limit=4',
+        prev: `${API}/interviews?tag=tag&offset=0&limit=4`,
+        next: `${API}/interviews?tag=tag&offset=7&limit=4`,
       },
     };
     const args = {
