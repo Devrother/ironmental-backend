@@ -3,6 +3,8 @@ jobs:
   test-backend:
     docker:
       - image: circleci/node:8.10.0
+    environment:
+      API: "https://api.ironmental.net/v1"
     working_directory: ~/repo
     steps:
       - checkout
