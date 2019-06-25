@@ -3,6 +3,8 @@ jobs:
   test-backend:
     docker:
       - image: circleci/node:8.10.0
+    environment:
+      API: "https://api.ironmental.net/v1"
     working_directory: ~/repo
     steps:
       - checkout
@@ -17,7 +19,7 @@ jobs:
           key: v1-dependencies-{{ checksum "package.json" }}
       - run:
           name: "JavaScript Linter"
-          command: yarn lint -- --format junit -o reports/junit/js-lint-results.xml
+          command: yarn eslint -- --format junit -o reports/junit/js-lint-results.xml
       - run:
           name: "JavaScript Test Suite"
           environment:
@@ -46,8 +48,9 @@ jobs:
       - run: yarn deploy
 workflows:
   version: 2
-  build-and-deploy:
+  test-and-deploy:
     jobs:
+      - test-backend
       - deploy-backend:
           filters:
             branches:
