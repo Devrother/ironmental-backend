@@ -1,14 +1,8 @@
 import express from 'express';
-import auth from './auth';
-import interview from './interview';
-import sub from './sub';
-import tag from './tag';
+import v1 from './v1';
 
 const router = express.Router();
 
-router.use('/api/v1/auth', auth);
-router.use('/api/v1/interviews', interview);
-router.use('/api/v1/subscribers', sub);
-router.use('/api/v1/tags', tag);
+router.use('/v1', v1);
 
 export default router;
