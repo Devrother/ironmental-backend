@@ -13,7 +13,6 @@ const TagSchema = new Schema({
 TagSchema.statics.findTagsSelect = function(atr) {
   return this.find()
     .select(atr)
-    .orFail();
 };
 
 TagSchema.statics.joinInterviewsByName = function(
