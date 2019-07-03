@@ -1,6 +1,9 @@
 import uuidv4 from 'uuid/v4';
 import sendMail from 'lib/sendMail';
-import { Subscriber } from 'database/models';
+import { 
+  Subscriber,
+  validateEmail 
+} from 'database/models';
 import {
   MAIL_SUBJECT,
   CHK_MAIL_MSG,
@@ -8,9 +11,10 @@ import {
   ALREDY_SUB_MSG,
 } from 'messages/strings';
 import { authMailHtml } from 'messages/htmlMail';
+// import Errors from '@hapi/joi/lib/errors'
 
+// const { ValidationError } = Errors.Err
 const { DOMAIN } = process.env;
-
 const createRequest = (message, isSub, isCertify) => {
   return { message, isSub, isCertify };
 };
@@ -24,6 +28,13 @@ export const subscribe = async (req, res) => {
   const uuid_v4 = uuidv4();
   const confirmLink = `${DOMAIN}/auth/confirm/${uuid_v4}`;
   const html = authMailHtml(email, confirmLink);
+  
+  const result = validateEmail(req.body)
+  
+  if (result.error) {
+    throw new Error('VaildationError')
+  }
+
 
   const subscriber = await Subscriber.findOne({ email });
   if (!subscriber) {
