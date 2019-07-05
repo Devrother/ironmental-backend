@@ -18,9 +18,9 @@ export const interviewTransform = interview => {
 
 export const interviewListTransform = (interviews, args) => {
   const { offsetNum, limitNum, tagName, total } = args;
-  let prevLink = `${API}/interviews?tag=${tagName}&offset=${offsetNum -
+  let prevLink = `https://${API}/interviews?tag=${tagName}&offset=${offsetNum -
     limitNum}&limit=${limitNum}`;
-  let nextLink = `${API}/interviews?tag=${tagName}&offset=${offsetNum +
+  let nextLink = `https://${API}/interviews?tag=${tagName}&offset=${offsetNum +
     limitNum}&limit=${limitNum}`;
 
   switch (true) {
@@ -33,12 +33,12 @@ export const interviewListTransform = (interviews, args) => {
     //   nextLink = null;
     //   break;
     case offsetNum + limitNum >= total:
-      prevLink = `${API}/interviews?tag=${tagName}&offset=${total -
+      prevLink = `https://${API}/interviews?tag=${tagName}&offset=${total -
       limitNum}&limit=${limitNum}`;
       nextLink = null;
       break;
     case offsetNum - limitNum < 0:
-      prevLink = `${API}/interviews?tag=${tagName}&offset=0&limit=${limitNum}`;
+      prevLink = `https://${API}/interviews?tag=${tagName}&offset=0&limit=${limitNum}`;
       break;
     default:
       break;
