@@ -38,6 +38,7 @@
   "author": "The serverless webpack authors (https://github.com/elastic-coders/serverless-webpack)",
   "license": "MIT",
   "dependencies": {
+    "@hapi/joi": "^15.1.0",
     "aws-sdk": "^2.479.0",
     "cors": "^2.8.5",
     "express": "^4.17.1",

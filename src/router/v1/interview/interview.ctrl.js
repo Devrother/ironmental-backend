@@ -1,4 +1,8 @@
-import { Interview, Tag } from 'database/models';
+import { 
+  Interview,
+  Tag,
+  validateQuery 
+} from 'database/models';
 import {
   interviewListTransform,
   interviewTransform,
@@ -6,6 +10,12 @@ import {
 
 export const listInterviews = async (req, res) => {
   const { tag, limit, offset } = req.query;
+
+  const result = validateQuery(req.query)
+  
+  if (result.error) {
+    throw new Error('VaildationError')
+  }
 
   const tagName = tag ? tag.toLowerCase() : 'all';
   const limitNum = parseInt(limit, 10) || 4;
