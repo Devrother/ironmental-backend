@@ -40,8 +40,8 @@ export const validateQuery = (query) => {
     tag: Joi.string(),
     limit: Joi.number().integer(),
     offset: Joi.number().integer()
-  })
+  });
   return schema.validate(query)
-}
+};
 
 export default mongoose.model('Interview', InterviewSchema);

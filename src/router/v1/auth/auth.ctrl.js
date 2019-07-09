@@ -6,10 +6,10 @@ import {
 export const confirm = async (req, res) => {
   const { confirmCode } = req.body;
 
-  const result = validateConfirmcode(req.body)
+  const result = validateConfirmcode(req.body);
   
   if (result.error) {
-    throw new Error('VaildationError')
+    throw new Error('ValidationError')
   }
 
   await Subscriber.updateByConfirmCode(confirmCode);

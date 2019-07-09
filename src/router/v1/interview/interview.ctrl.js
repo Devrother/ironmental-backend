@@ -11,10 +11,10 @@ import {
 export const listInterviews = async (req, res) => {
   const { tag, limit, offset } = req.query;
 
-  const result = validateQuery(req.query)
+  const result = validateQuery(req.query);
   
   if (result.error) {
-    throw new Error('VaildationError')
+    throw new Error('ValidationError')
   }
 
   const tagName = tag ? tag.toLowerCase() : 'all';
