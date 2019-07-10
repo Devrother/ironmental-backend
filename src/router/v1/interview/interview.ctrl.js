@@ -21,26 +21,13 @@ export const listInterviews = async (req, res) => {
   const limitNum = parseInt(limit, 10) || 4;
   const offsetNum = parseInt(offset, 10) || 0;
 
-  if (!tagName || tagName === 'all') {
-    const total = await Interview.getInterviewsCnt();
-    const interviews = await Interview.findWithPagination(offsetNum, limitNum);
+  const interviews = tagName === 'all'
+    ? await Interview.findWithPagination(offsetNum, limitNum)
+    : (await Tag.joinInterviewsByName(tagName, limitNum, offsetNum)).interviews;
 
-    return res.send(
-      interviewListTransform(interviews, {
-        tagName,
-        limitNum,
-        offsetNum,
-        total,
-      }),
-    );
-  }
-
-  const total = await Tag.getInterviewsCntInTag();
-  const { interviews } = await Tag.joinInterviewsByName(
-    tagName,
-    limitNum,
-    offsetNum,
-  );
+  const total = tagName === 'all'
+    ? await Interview.getInterviewsCnt()
+    : await Tag.getInterviewsCntInTag();
 
   res.send(
     interviewListTransform(interviews, {

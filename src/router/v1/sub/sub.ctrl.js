@@ -36,14 +36,16 @@ export const subscribe = async (req, res) => {
 
   const subscriber = await Subscriber.findOne({ email });
   if (!subscriber) {
-    const sub = new Subscriber({
+    const newSubscriber = new Subscriber({
       email,
       confirmCode: uuid_v4,
       isCertify: false,
     });
 
-    await sendMail(createMailForm(email, MAIL_SUBJECT, html));
-    await sub.save();
+    await Promise.all([
+      sendMail(createMailForm(email, MAIL_SUBJECT, html)),
+      newSubscriber.save()
+    ]);
 
     return res.send(createRequest(CHK_MAIL_MSG, false, false));
   }
@@ -54,9 +56,10 @@ export const subscribe = async (req, res) => {
     return res.send(createRequest(ALREDY_SUB_MSG, true, isCertify));
   }
 
-  await sendMail(createMailForm(email, MAIL_SUBJECT, html));
-
-  await Subscriber.updateSubByEmail(email, uuid_v4);
+  await Promise.all([
+    sendMail(createMailForm(email, MAIL_SUBJECT, html)),
+    Subscriber.updateSubByEmail(email, uuid_v4)
+  ]);
 
   res.send(createRequest(NO_CERTIFY_MSG, true, isCertify));
 };
