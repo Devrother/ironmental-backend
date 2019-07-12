@@ -9,7 +9,7 @@
     "dev": "NODE_PATH=src APP_ENV=local nodemon src/local --exec babel-node",
     "deploy:dev": "sls deploy --stage dev",
     "deploy": "sls deploy --stage prod",
-    "offline-cron": "sls offline start --location .webpack/service"
+    "offline-cron": "sls offline start --skipCacheInvalidation --location .webpack/service"
   },
   "devDependencies": {
     "@babel/cli": "^7.4.4",
