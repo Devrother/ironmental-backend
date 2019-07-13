@@ -16,6 +16,8 @@ const SubscriberSchema = new Schema({
     type: Boolean,
     required: true,
   },
+  favoriteTags: [{ type: String }],
+  received: [{ type: Schema.Types.ObjectId, ref: 'Interview' }],
 });
 
 SubscriberSchema.statics.updateSubByEmail = function(email, uuid_v4) {
