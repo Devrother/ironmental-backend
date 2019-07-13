@@ -1,0 +1,15 @@
+#!/usr/bin/env bash
+
+./node_modules/.bin/eslint src/**
+if [ $? -ne 0 ]; then
+    echo "[!] eslint failed!"
+    exit 1
+fi
+echo "[+] eslint success!"
+
+NODE_ENV=test ./node_modules/.bin/jest
+if [ $? -ne 0 ]; then
+    echo "[!] jest failed!"
+    exit
+fi
+echo "[+] jest success!"

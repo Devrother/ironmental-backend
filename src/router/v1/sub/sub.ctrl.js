@@ -11,9 +11,7 @@ import {
   ALREDY_SUB_MSG,
 } from 'messages/strings';
 import { authMailHtml } from 'messages/htmlMail';
-// import Errors from '@hapi/joi/lib/errors'
 
-// const { ValidationError } = Errors.Err
 const { DOMAIN } = process.env;
 const createRequest = (message, isSub, isCertify) => {
   return { message, isSub, isCertify };
@@ -29,10 +27,10 @@ export const subscribe = async (req, res) => {
   const confirmLink = `${DOMAIN}/auth/confirm/${uuid_v4}`;
   const html = authMailHtml(email, confirmLink);
   
-  const result = validateEmail(req.body)
+  const result = validateEmail(req.body);
   
   if (result.error) {
-    throw new Error('VaildationError')
+    throw new Error('ValidationError')
   }
 
 
@@ -61,10 +59,4 @@ export const subscribe = async (req, res) => {
   await Subscriber.updateSubByEmail(email, uuid_v4);
 
   res.send(createRequest(NO_CERTIFY_MSG, true, isCertify));
-};
-
-// TODO: 확인용
-export const show = async (req, res) => {
-  const subscribers = await Subscriber.find();
-  res.send(subscribers);
 };
