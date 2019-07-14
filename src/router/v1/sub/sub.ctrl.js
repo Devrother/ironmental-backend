@@ -1,9 +1,6 @@
 import uuidv4 from 'uuid/v4';
 import sendMail from 'lib/sendMail';
-import { 
-  Subscriber,
-  validateEmail 
-} from 'database/models';
+import { Subscriber } from 'database/models';
 import {
   MAIL_SUBJECT,
   CHK_MAIL_MSG,
@@ -26,13 +23,6 @@ export const subscribe = async (req, res) => {
   const uuid_v4 = uuidv4();
   const confirmLink = `${DOMAIN}/auth/confirm/${uuid_v4}`;
   const html = authMailHtml(email, confirmLink);
-  
-  const result = validateEmail(req.body);
-  
-  if (result.error) {
-    throw new Error('ValidationError')
-  }
-
 
   const subscriber = await Subscriber.findOne({ email });
   if (!subscriber) {

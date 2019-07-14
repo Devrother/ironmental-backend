@@ -3,7 +3,7 @@ import serverless from 'serverless-http';
 import cors from 'cors';
 import router from './router';
 import db from './database/db';
-import { errorResponse } from './middlewares';
+import { errorResponse, validator } from './middlewares';
 
 export default class Server {
   constructor() {
@@ -20,39 +20,10 @@ export default class Server {
     const { app } = this;
     app.use(cors());
     app.use(express.json());
-    // app.use(async (req, res, next) => {
-    //     try {
-    //         await this.ensureDb();
-    //         return next();
-    //     } catch(e) {
-    //         res.status(500).send(e);
-    //     }
-    // });
+    app.use(validator);
     app.use(router);
     app.use(errorResponse);
   }
-
-  // ensureDb() {
-  //     return new Promise((resolve, reject) => {
-  //         let count = 0;
-  //         const tryConnect = async () => {
-  //             try {
-  //                 await db.connect();
-  //                 resolve();
-  //             } catch(e) {
-  //                 count++;
-  //                 console.log(`[!] DB connection failed ${count}`)
-  //                 if (count > 5) {
-
-  //                     reject(new Error('Failed after 5 retries'))
-  //                     return;
-  //                 }
-  //                 setTimeout(tryConnect, 10);
-  //             }
-  //         };
-  //         tryConnect();
-  //     });
-  // }
 
   listen(port) {
     const { app } = this;
