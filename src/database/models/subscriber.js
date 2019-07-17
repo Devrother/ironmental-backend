@@ -1,5 +1,4 @@
 import mongoose, { Schema } from 'mongoose';
-import Joi from '@hapi/joi'
 
 const SubscriberSchema = new Schema({
   createdAt: { type: Date, default: Date.now },
@@ -35,19 +34,5 @@ SubscriberSchema.statics.updateByConfirmCode = function(code) {
     { runValidators: true },
   ).orFail();
 };
-
-export const validateEmail = (body) => {
-  const schema = Joi.object({
-    email: Joi.string().email()
-  })
-  return schema.validate(body)
-}
-
-export const validateConfirmcode = (body) => {
-  const schema = Joi.object({
-    confirmCode: Joi.string().guid()
-  })
-  return schema.validate(body)
-}
 
 export default mongoose.model('Subscriber', SubscriberSchema);

@@ -1,5 +1,4 @@
 import mongoose, { Schema } from 'mongoose';
-import Joi from '@hapi/joi'
 
 const InterviewSchema = new Schema({
   createdAt: { type: Date, default: Date.now },
@@ -33,15 +32,6 @@ InterviewSchema.statics.findWithPagination = function(skipNum, limitNum) {
 
 InterviewSchema.statics.getInterviewsCnt = function() {
   return this.countDocuments();
-};
-
-export const validateQuery = (query) => {
-  const schema = Joi.object({
-    tag: Joi.string(),
-    limit: Joi.number().integer(),
-    offset: Joi.number().integer()
-  });
-  return schema.validate(query)
 };
 
 export default mongoose.model('Interview', InterviewSchema);

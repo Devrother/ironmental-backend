@@ -1,16 +1,7 @@
-import {
-  Subscriber,
-  validateConfirmcode
-} from 'database/models';
+import { Subscriber } from 'database/models';
 
 export const confirm = async (req, res) => {
   const { confirmCode } = req.body;
-
-  const result = validateConfirmcode(req.body);
-  
-  if (result.error) {
-    throw new Error('ValidationError')
-  }
 
   await Subscriber.updateByConfirmCode(confirmCode);
 
