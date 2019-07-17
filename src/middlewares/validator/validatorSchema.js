@@ -3,7 +3,7 @@ import Joi from '@hapi/joi';
 const { API_VERSION } = process.env;
 
 const interviewsQuerySchema = Joi.object({
-  tag: Joi.string(),
+  tag: Joi.string().regex(/^[a-zA-Z]+$/),
   limit: Joi.number().integer(),
   offset: Joi.number().integer()
 });
