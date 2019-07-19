@@ -21,7 +21,7 @@ provider:
     NODE_ENV: 'production'
   iamRoleStatements:
     - Effect: 'Allow'
-      Action:
+      Action: 
         - 'ec2:CreateNetworkInterface'
         - 'ec2:DescribeNetworkInterfaces'
         - 'ec2:DetachNetworkInterface'
@@ -79,8 +79,3 @@ functions:
     #   subnetIds:
     #     - subnet-6bcbb527
     #     - subnet-34848e5c
-  send-contents:
-    handler: src/cron.handler
-    events:
-      - schedule: cron(0 1 ? * MON *)
-      # - schedule: cron(* * ? * * *)
