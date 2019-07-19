@@ -16,8 +16,8 @@ const confirmCodeSchema = Joi.object({
   confirmCode: Joi.string().guid()
 });
 
-module.exports = {
+export default {
   [`/${API_VERSION}/interviews`]: interviewsQuerySchema,
   [`/${API_VERSION}/subscribers`]: emailSchema,
   [`/${API_VERSION}/auth/confirm`]: confirmCodeSchema,
-};
+}
