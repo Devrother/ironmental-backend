@@ -79,7 +79,8 @@ functions:
     #   subnetIds:
     #     - subnet-6bcbb527
     #     - subnet-34848e5c
-  cron:
+  send-contents:
     handler: src/cron.handler
     events:
-      - schedule: cron(* * * * * *)
+      - schedule: cron(0 1 ? * MON *)
+      # - schedule: cron(* * ? * * *)
