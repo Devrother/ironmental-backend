@@ -32,10 +32,11 @@ TagSchema.statics.joinInterviewsByName = function(
     .orFail();
 };
 
-TagSchema.statics.getInterviewsCntInTag = function() {
-  return this.find()
-    .select('interviews')
-    .countDocuments();
+TagSchema.statics.getInterviewsCntInTag = function(tagName) {
+  return this.findOne({ name: tagName })
+    .select('interviews').then((data) => {
+      return data.interviews.length
+    })
 };
 
 export default mongoose.model('Tag', TagSchema);

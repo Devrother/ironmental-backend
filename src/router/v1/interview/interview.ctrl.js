@@ -20,8 +20,7 @@ export const listInterviews = async (req, res) => {
 
   const total = tagName === 'all'
     ? await Interview.getInterviewsCnt()
-    : await Tag.getInterviewsCntInTag();
-
+    : await Tag.getInterviewsCntInTag(tagName);
   res.send(
     interviewListTransform(interviews, {
       tagName, limitNum, offsetNum, total,
