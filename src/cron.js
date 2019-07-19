@@ -1,5 +1,6 @@
 import sendMail from 'lib/sendMail';
 import { Subscriber, Tag, Interview } from 'database/models';
+import { sendInterviewHtml } from 'messages/sendInterview';
 import db from './database/db';
 
 const createMailForm = (email, subject, html) => {
@@ -80,12 +81,27 @@ const choiceInterview = async (subscriber) => {
   return transformEmailItv(email, sendables[makeRanNum(sendables)]);
 }
 
+const getTimeStamp = () => { 
+	const date = new Date();
+	let month = String(date.getMonth() + 1);
+	let day = String(date.getDate());
+	const year = String(date.getFullYear()); 
+	
+	if (month.length < 2) month = `0${month}`; 
+	if (day.length < 2) day = `0${day}`; 
+	return [year, month, day].join('-'); 
+}
+
 const sendEachMail = async (emailAndItv) => {
   const { email, sendable } = emailAndItv;
-  const interview = await Interview.findById(sendable);
-  const { question } = interview;
-  const subject = 'Test입니다.';
-  await sendMail(createMailForm(email, subject, question));
+  const interview = await Interview
+    .findById(sendable)
+    .select('question')
+    .select('_id');
+  const { question, _id } = interview;
+  const subject = `[IronMental] ${getTimeStamp()}`;
+  const html = sendInterviewHtml(question, _id);
+  await sendMail(createMailForm(email, subject, html));
 }
 
 const sendAllMail = async (emailAndItvArr) => {
