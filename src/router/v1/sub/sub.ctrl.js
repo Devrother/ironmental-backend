@@ -1,4 +1,3 @@
-import uuidv4 from 'uuid/v4';
 import sendMail from 'lib/sendMail';
 import { Subscriber } from 'database/models';
 import {
@@ -20,18 +19,17 @@ const createMailForm = (email, subject, html) => {
 
 export const subscribe = async (req, res) => {
   const { email } = req.body;
-  const uuid_v4 = uuidv4();
-  const confirmLink = `${DOMAIN}/auth/confirm/${uuid_v4}`;
-  const html = authMailHtml(email, confirmLink);
+  const newSubscriber = new Subscriber({
+    email,
+    isCertify: false,
+  });
 
   const subscriber = await Subscriber.findOne({ email });
-  if (!subscriber) {
-    const newSubscriber = new Subscriber({
-      email,
-      confirmCode: uuid_v4,
-      isCertify: false,
-    });
+  const subscriberId = subscriber ? subscriber.id : newSubscriber.id;
+  const confirmLink = `${DOMAIN}/auth/confirm/${subscriberId}`;
+  const html = authMailHtml(email, confirmLink);
 
+  if (!subscriber) {
     await Promise.all([
       sendMail(createMailForm(email, MAIL_SUBJECT, html)),
       newSubscriber.save()
@@ -46,10 +44,7 @@ export const subscribe = async (req, res) => {
     return res.send(createRequest(ALREDY_SUB_MSG, true, isCertify));
   }
 
-  await Promise.all([
-    sendMail(createMailForm(email, MAIL_SUBJECT, html)),
-    Subscriber.updateSubByEmail(email, uuid_v4)
-  ]);
+  await sendMail(createMailForm(email, MAIL_SUBJECT, html));
 
   res.send(createRequest(NO_CERTIFY_MSG, true, isCertify));
 };

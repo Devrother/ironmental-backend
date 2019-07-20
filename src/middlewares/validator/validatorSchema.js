@@ -12,12 +12,12 @@ const emailSchema = Joi.object({
   email: Joi.string().email()
 });
 
-const confirmCodeSchema = Joi.object({
-  confirmCode: Joi.string().guid()
+const subscribeIdSchema = Joi.object({
+  subscriberId: Joi.string().regex(/^[0-9a-fA-F]{24}$/)
 });
 
 module.exports = {
   [`/${API_VERSION}/interviews`]: interviewsQuerySchema,
   [`/${API_VERSION}/subscribers`]: emailSchema,
-  [`/${API_VERSION}/auth/confirm`]: confirmCodeSchema,
+  [`/${API_VERSION}/auth/confirm`]: subscribeIdSchema,
 };
