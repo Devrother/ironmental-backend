@@ -8,9 +8,6 @@ const SubscriberSchema = new Schema({
     minlength: 3,
     maxlength: 50,
   },
-  confirmCode: {
-    type: String,
-  },
   isCertify: {
     type: Boolean,
     required: true,
@@ -19,18 +16,10 @@ const SubscriberSchema = new Schema({
   received: [{ type: Schema.Types.ObjectId, ref: 'Interview' }],
 });
 
-SubscriberSchema.statics.updateSubByEmail = function(email, uuid_v4) {
+SubscriberSchema.statics.updateById = function(id) {
   return this.findOneAndUpdate(
-    { email },
-    { confirmCode: uuid_v4 },
-    { runValidators: true },
-  ).orFail();
-};
-
-SubscriberSchema.statics.updateByConfirmCode = function(code) {
-  return this.findOneAndUpdate(
-    { confirmCode: code },
-    { confirmCode: null, isCertify: true },
+    { _id: id },
+    { isCertify: true },
     { runValidators: true },
   ).orFail();
 };
