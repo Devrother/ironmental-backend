@@ -12,7 +12,7 @@ const sendMail = ({
   email,
   subject,
   html,
-  from = 'Ironmental Manager<no-reply@ironmental.net>',
+  from = 'IronMental Manager<no-reply@ironmental.net>',
 }) => {
   return transporter.sendMail({
     from,

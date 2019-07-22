@@ -4,7 +4,7 @@ import {
   MAIL_SUBJECT,
   CHK_MAIL_MSG,
   NO_CERTIFY_MSG,
-  ALREDY_SUB_MSG,
+  ALREADY_SUB_MSG,
 } from 'messages/strings';
 import { authMailHtml } from 'messages/htmlMail';
 
@@ -41,7 +41,7 @@ export const subscribe = async (req, res) => {
   const { isCertify } = subscriber;
 
   if (isCertify) {
-    return res.send(createRequest(ALREDY_SUB_MSG, true, isCertify));
+    return res.send(createRequest(ALREADY_SUB_MSG, true, isCertify));
   }
 
   await sendMail(createMailForm(email, MAIL_SUBJECT, html));
