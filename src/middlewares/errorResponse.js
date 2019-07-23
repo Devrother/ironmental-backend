@@ -20,6 +20,7 @@ export default (err, req, res, next) => {
   const { message } = err;
   switch (true) {
     case err instanceof CastError:
+      return res.status(404).send(HTTP_404_MSG());
     case err instanceof NotFoundError:
       return res.status(404).send(HTTP_404_MSG(message));
     case err instanceof UnauthorizedError:

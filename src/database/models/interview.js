@@ -23,7 +23,9 @@ const InterviewSchema = new Schema({
 });
 
 InterviewSchema.statics.findInterviewById = function(id) {
-  return this.findOne({ _id: id })
+  // return this.findOne({ _id: id })
+  //   .orFail(new NotFoundError(NOT_FOUND_INTERVIEW));
+  return this.findById(id)
     .orFail(new NotFoundError(NOT_FOUND_INTERVIEW));
 };
 
