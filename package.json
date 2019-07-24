@@ -5,10 +5,11 @@
   "scripts": {
     "test": "NODE_ENV=test ./node_modules/.bin/jest",
     "eslint": "./node_modules/.bin/eslint src/**",
-    "offline": "sls offline --port 5001 --skipCacheInvalidation",
+    "offline": "sls offline --port 5001 -c",
     "dev": "NODE_PATH=src APP_ENV=local nodemon src/local --exec babel-node",
     "deploy:dev": "sls deploy --stage dev",
-    "deploy": "sls deploy --stage prod"
+    "deploy": "sls deploy --stage prod",
+    "offline-cron": "sls offline start -c --location .webpack/service"
   },
   "devDependencies": {
     "@babel/cli": "^7.4.4",
@@ -31,6 +32,7 @@
     "serverless": "^1.45.1",
     "serverless-dotenv-plugin": "^2.1.1",
     "serverless-offline": "^5.4.2",
+    "serverless-offline-scheduler": "^0.3.7",
     "serverless-webpack": "^5.3.1",
     "webpack": "^4.35.0",
     "webpack-node-externals": "^1.7.2"
@@ -38,6 +40,7 @@
   "author": "The serverless webpack authors (https://github.com/elastic-coders/serverless-webpack)",
   "license": "MIT",
   "dependencies": {
+    "@hapi/joi": "^15.1.0",
     "aws-sdk": "^2.479.0",
     "cors": "^2.8.5",
     "express": "^4.17.1",

@@ -26,5 +26,6 @@ module.exports = {
     'max-len': 0,
     'no-restricted-globals': 0,
     'import/no-extraneous-dependencies': ['error', { ignore: ['aws-sdk'] }],
+    'no-underscore-dangle': 0,
   },
 };

@@ -1,4 +1,6 @@
 import mongoose, { Schema } from 'mongoose';
+import { UnauthorizedError } from 'lib/errors'
+import { UNAUTH_SUBSCRIBER_MSG } from 'messages/strings'
 
 const SubscriberSchema = new Schema({
   createdAt: { type: Date, default: Date.now },
@@ -8,29 +10,20 @@ const SubscriberSchema = new Schema({
     minlength: 3,
     maxlength: 50,
   },
-  confirmCode: {
-    type: String,
-  },
   isCertify: {
     type: Boolean,
     required: true,
   },
+  favoriteTags: [{ type: String }],
+  received: [{ type: Schema.Types.ObjectId, ref: 'Interview' }],
 });
 
-SubscriberSchema.statics.updateSubByEmail = function(email, uuid_v4) {
+SubscriberSchema.statics.updateCertifyValueById = function(id, certifyValue) {
   return this.findOneAndUpdate(
-    { email },
-    { confirmCode: uuid_v4 },
+    { _id: id },
+    { isCertify: certifyValue },
     { runValidators: true },
-  ).orFail();
-};
-
-SubscriberSchema.statics.updateByConfirmCode = function(code) {
-  return this.findOneAndUpdate(
-    { confirmCode: code },
-    { confirmCode: null, isCertify: true },
-    { runValidators: true },
-  ).orFail();
+  ).orFail(new UnauthorizedError(UNAUTH_SUBSCRIBER_MSG));
 };
 
 export default mongoose.model('Subscriber', SubscriberSchema);

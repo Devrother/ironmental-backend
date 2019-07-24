@@ -5,8 +5,6 @@ import * as subCtrl from './sub.ctrl';
 const sub = express.Router();
 
 sub.post('/', handleExceptions(subCtrl.subscribe));
-
-// TODO: test 용도
-sub.get('/', handleExceptions(subCtrl.show));
+sub.put('/', handleExceptions(subCtrl.unsubscribe));
 
 export default sub;

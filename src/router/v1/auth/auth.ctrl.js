@@ -1,9 +1,10 @@
 import { Subscriber } from 'database/models';
+import { SUCCESS_AUTH_MSG } from 'messages/strings'
 
 export const confirm = async (req, res) => {
-  const { confirmCode } = req.body;
+  const { subscriberId } = req.body;
 
-  await Subscriber.updateByConfirmCode(confirmCode);
+  await Subscriber.updateCertifyValueById(subscriberId, true);
 
-  res.send({ message: '인증되었습니다! ' });
+  res.send({ message: SUCCESS_AUTH_MSG });
 };
