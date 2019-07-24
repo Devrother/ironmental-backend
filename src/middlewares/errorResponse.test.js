@@ -1,4 +1,6 @@
 import mongoose from 'mongoose';
+import { NotFoundError } from 'lib/errors';
+import { SERVER_ERROR_MSG } from 'messages/strings';
 import errorResponse from './errorResponse';
 
 const mockResponse = () => {
@@ -9,21 +11,22 @@ const mockResponse = () => {
 };
 
 describe('[Middleware] errorResponse Test', () => {
-  const { DocumentNotFoundError, CastError } = mongoose.Error;
+  const { CastError } = mongoose.Error;
   const middleware = errorResponse;
 
   test('DocumentNotFoundError test -> 404 Error', () => {
     const req = {};
     const next = jest.fn();
-    const err = new DocumentNotFoundError();
+    const err = new NotFoundError();
     const res = mockResponse();
 
     middleware(err, req, res, next);
 
     expect(res.send).toHaveBeenCalledWith({
-      error: { message: 'Not Found', status: 404 },
+      error: { message: 'Not Found Error', status: 404 },
     });
   });
+
   test('CaseError test -> 404 Error', () => {
     const req = {};
     const next = jest.fn();
@@ -33,7 +36,7 @@ describe('[Middleware] errorResponse Test', () => {
     middleware(err, req, res, next);
 
     expect(res.send).toHaveBeenCalledWith({
-      error: { message: 'Not Found', status: 404 },
+      error: { message: 'Not Found Error', status: 404 },
     });
   });
 
@@ -46,7 +49,7 @@ describe('[Middleware] errorResponse Test', () => {
     middleware(err, req, res, next);
 
     expect(res.send).toHaveBeenCalledWith({
-      error: { message: 'Internal Server Error', status: 500 },
+      error: { message: SERVER_ERROR_MSG, status: 500 },
     });
   });
 });

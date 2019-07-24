@@ -17,7 +17,14 @@ const subscribeIdSchema = Joi.object({
 });
 
 export default {
-  [`/${API_VERSION}/interviews`]: interviewsQuerySchema,
-  [`/${API_VERSION}/subscribers`]: emailSchema,
-  [`/${API_VERSION}/auth/confirm`]: subscribeIdSchema,
+  [`/${API_VERSION}/interviews`]: {
+    'get': interviewsQuerySchema
+  },
+  [`/${API_VERSION}/subscribers`]: {
+    'post': emailSchema,
+    'put': subscribeIdSchema
+  },
+  [`/${API_VERSION}/auth/confirm`]: {
+    'post': subscribeIdSchema
+  },
 };

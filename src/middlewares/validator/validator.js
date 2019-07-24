@@ -1,4 +1,6 @@
 import url from 'url';
+import { ValidationError } from 'lib/errors'
+import { BAD_REQ_MSG } from 'messages/strings'
 import Schemas from './validatorSchema';
 
 export default (req, res, next) => {
@@ -14,10 +16,10 @@ export default (req, res, next) => {
     return next();
   }
 
-  const schema = Schemas[routePath];
+  const schema = Schemas[routePath][httpMethod];
   const dataToValidate = httpMethod === 'get' ? req.query : req.body;
 
   const { error } = schema.validate(dataToValidate);
-  if (error) return next(new Error('ValidationError'));
+  if (error) return next(new ValidationError(BAD_REQ_MSG));
   next();
 };

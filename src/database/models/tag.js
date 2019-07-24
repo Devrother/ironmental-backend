@@ -1,4 +1,6 @@
 import mongoose, { Schema } from 'mongoose';
+import { NotFoundError } from 'lib/errors';
+import { NOT_FOUND_TAG} from 'messages/strings';
 
 const TagSchema = new Schema({
   createdAt: { type: Date, default: Date.now },
@@ -29,7 +31,7 @@ TagSchema.statics.joinInterviewsByName = function(
         skip: offsetNum,
       },
     })
-    .orFail();
+    .orFail(new NotFoundError(NOT_FOUND_TAG));
 };
 
 TagSchema.statics.getInterviewsCntInTag = function(tagName) {

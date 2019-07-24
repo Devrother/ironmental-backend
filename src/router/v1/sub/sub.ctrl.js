@@ -5,6 +5,7 @@ import {
   CHK_MAIL_MSG,
   NO_CERTIFY_MSG,
   ALREADY_SUB_MSG,
+  SUCCESS_UNSUBSCRIBE_MSG,
 } from 'messages/strings';
 import { authMailHtml } from 'messages/htmlMail';
 
@@ -47,4 +48,11 @@ export const subscribe = async (req, res) => {
   await sendMail(createMailForm(email, MAIL_SUBJECT, html));
 
   res.send(createRequest(NO_CERTIFY_MSG, true, isCertify));
+};
+
+export const unsubscribe = async (req, res) => {
+  const { subscriberId } = req.body;
+  await Subscriber.updateCertifyValueById(subscriberId, false);
+
+  res.send({ message: SUCCESS_UNSUBSCRIBE_MSG })
 };
