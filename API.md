@@ -69,18 +69,7 @@ Returns json datas about all interviews.
     {
         "error" : {
             "status" : 400,
-            "message" : "Bad Request"
-        }
-    }
-    ```
-
-    * *Code:* `404`
-
-    ``` json
-    {
-        "error" : {
-            "status" : 404,
-            "message" : "Not Found"
+            "message" : "잘못된 요청입니다 :("
         }
     }
     ```
@@ -91,7 +80,7 @@ Returns json datas about all interviews.
     {
         "error" : {
             "status" : 500,
-            "message" : "Internal Server Error"
+            "message" : "서버에 문제가 있는 것 같아요 ㅠ.ㅠ 기다려주세요"
         }
     }
     ```
@@ -130,7 +119,7 @@ Returns json data about single interview.
         "created": "2019-05-31T15:05:28.527Z",
         "updated": "2019-05-31T15:05:28.527Z",
         "links": {
-            "self": api.ironmental.net/v1/interviews/5cf142b857cd51f683cd928e,
+            "self": "https://api.ironmental.net/v1/interviews/5cf142b857cd51f683cd928e",
         }
     }
 
@@ -144,7 +133,7 @@ Returns json data about single interview.
     {
         "error" : {
             "status" : 404,
-            "message" : "Not Found"
+            "message" : "해당 글을 찾지 못하였습니다 ㅠ.ㅠ"
         }
     }
     ```
@@ -155,7 +144,7 @@ Returns json data about single interview.
     {
         "error" : {
             "status" : 500,
-            "message" : "Internal Server Error"
+            "message" : "서버에 문제가 있는 것 같아요 ㅠ.ㅠ 기다려주세요"
         }
     }
     ```
@@ -168,7 +157,7 @@ Inserts data about subscriber.
 
 * **URL**
 
-    `/sub`
+    `/subscribers`
 
 * **Method**
 
@@ -224,7 +213,7 @@ Inserts data about subscriber.
     {
         "error" : {
             "status" : 400,
-            "message" : "Bad Reuqest"
+            "message" : "잘못된 요청입니다 :("
         }
     }
     ```
@@ -235,10 +224,75 @@ Inserts data about subscriber.
     {
         "error" : {
             "status" : 500,
-            "message" : "Internal Server Error"
+            "message" : "서버에 문제가 있는 것 같아요 ㅠ.ㅠ 기다려주세요"
         }
     }
     ```
+
+## Unsubscribe
+
+Unsubscribe
+
+* **URL**
+
+    `/subscribers/:id`
+
+* **Method**
+
+    `PUT`
+
+* **URL Params**
+
+    `id: ObjectId = ObjectId("5cf142b857cd51f683cd928e")`
+
+* **Data Params**
+
+    `{ "subscriberId": "5cf142b857cd51f683cd928e" }`
+    
+
+* **Success Response**
+    * *Code*: `200`
+    ```json
+    {
+        "message": "구독 취소되었습니다 ㅠ.ㅠ",
+    }
+    ```
+
+* **Error Response**
+    * *Code:* `400`
+
+    ```json
+    {
+        "error" : {
+            "status" : 400,
+            "message" : "잘못된 요청입니다 :("
+        }
+    }
+    ```
+
+    * *Code:* `401`
+    
+    ```json
+    {
+        "error" : {
+            "status" : 401,
+            "message" : "구독자 정보가 잘못되었습니다"
+        }
+    }
+    ```
+
+    * *Code:* `500`
+    
+    ```json
+    {
+        "error" : {
+            "status" : 500,
+            "message" : "서버에 문제가 있는 것 같아요 ㅠ.ㅠ 기다려주세요"
+        }
+    }
+    ```
+
+
 # Tag
 ## Show All Tags
 
@@ -272,13 +326,24 @@ Returns json datas about a tags data.
     ```
 
 * **Error Response:**
+    * *Code:* `404`
+    
+    ```json
+    {
+        "error" : {
+            "status" : 404,
+            "message" : "해당 태그를 찾지 못하였습니다 ㅠ.ㅠ"
+        }
+    }
+    ```
+
     * *Code:* `500`
     
     ```json
     {
         "error" : {
             "status" : 500,
-            "message" : "Internal Server Error"
+            "message" : "서버에 문제가 있는 것 같아요 ㅠ.ㅠ 기다려주세요"
         }
     }
     ```
@@ -291,7 +356,7 @@ Sends confirm code to check whether user already subscribes.
 
 * **URL**
 
-    `/confirm`
+    `/auth/confirm`
 
 * **Method:**
 
@@ -303,7 +368,7 @@ Sends confirm code to check whether user already subscribes.
    
 * **Data Params**
   
-    `{ "confirmCode": [uuid] }`
+    `{ "subscriberId": "5cf142b857cd51f683cd928e" }`
 
 * **Success Response**
 
@@ -322,18 +387,18 @@ Sends confirm code to check whether user already subscribes.
     {
         "error" : {
             "status" : 400,
-            "message" : "Bad Reuqest"
+            "message" : "잘못된 요청입니다 :("
         }
     }
     ```
 
-    * *Code:* `404`
+    * *Code:* `401`
     
     ```json
     {
         "error" : {
-            "status" : 404,
-            "message" : "Not Found"
+            "status" : 401,
+            "message" : "구독자 정보가 잘못되었습니다"
         }
     }
     ```
@@ -344,7 +409,7 @@ Sends confirm code to check whether user already subscribes.
     {
         "error" : {
             "status" : 500,
-            "message" : "Internal Server Error"
+            "message" : "서버에 문제가 있는 것 같아요 ㅠ.ㅠ 기다려주세요"
         }
     }
     ```
