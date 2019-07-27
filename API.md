@@ -235,7 +235,7 @@ Unsubscribe
 
 * **URL**
 
-    `/subscribers/:id`
+    `/subscribers`
 
 * **Method**
 
@@ -243,7 +243,7 @@ Unsubscribe
 
 * **URL Params**
 
-    `id: ObjectId = ObjectId("5cf142b857cd51f683cd928e")`
+    `None`
 
 * **Data Params**
 
