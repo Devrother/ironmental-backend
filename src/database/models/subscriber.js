@@ -1,6 +1,6 @@
 import mongoose, { Schema } from 'mongoose';
-import { UnauthorizedError } from 'lib/errors'
-import { UNAUTH_SUBSCRIBER_MSG } from 'messages/strings'
+import { NotFoundError } from 'lib/errors'
+import { NOT_FOUND_SUBSCRIBER } from 'messages/strings'
 
 const SubscriberSchema = new Schema({
   createdAt: { type: Date, default: Date.now },
@@ -23,7 +23,7 @@ SubscriberSchema.statics.updateCertifyValueById = function(id, certifyValue) {
     { _id: id },
     { isCertify: certifyValue },
     { runValidators: true },
-  ).orFail(new UnauthorizedError(UNAUTH_SUBSCRIBER_MSG));
+  ).orFail(new NotFoundError(NOT_FOUND_SUBSCRIBER));
 };
 
 export default mongoose.model('Subscriber', SubscriberSchema);
