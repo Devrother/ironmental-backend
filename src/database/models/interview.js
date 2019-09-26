@@ -20,6 +20,10 @@ const InterviewSchema = new Schema({
     type: Array,
     default: [],
   },
+  keywords: {
+    type: Array,
+    default: [],
+  },
 });
 
 InterviewSchema.statics.findInterviewById = function(id) {
