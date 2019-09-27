@@ -300,7 +300,7 @@ Returns json datas about a tags data.
 
 * **URL**
 
-    /tags
+    `/tags`
 
 * **Method**
 
