@@ -6,7 +6,7 @@ const interviewsQuerySchema = Joi.object({
   tag: Joi.string().regex(/^[a-zA-Z]+$/),
   limit: Joi.number().integer(),
   offset: Joi.number().integer(),
-  search: Joi.string()
+  search: Joi.string().allow('')
 });
 
 const emailSchema = Joi.object({
