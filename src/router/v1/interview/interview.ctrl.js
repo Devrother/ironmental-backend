@@ -17,7 +17,7 @@ export const listInterviews = async (req, res) => {
 
   const interviews = tagName === 'all'
     ? await Interview.findWithPagination(offsetNum, limitNum, searchQuery)
-    : (await Tag.joinInterviewsByName(tagName, limitNum, offsetNum)).interviews;
+    : (await Tag.joinInterviewsByName(tagName, limitNum, offsetNum, searchQuery)).interviews;
 
   const total = tagName === 'all'
     ? await Interview.getInterviewsCnt(searchQuery)
