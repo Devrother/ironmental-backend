@@ -25,7 +25,7 @@ export const listInterviews = async (req, res) => {
 
   res.send(
     interviewListTransform(interviews, {
-      tagName, limitNum, offsetNum, total,
+      searchQuery, tagName, limitNum, offsetNum, total,
     }),
   );
 };
