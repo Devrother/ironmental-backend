@@ -21,6 +21,7 @@ TagSchema.statics.joinInterviewsByName = function(
   tagName,
   limitNum,
   offsetNum,
+  searchData
 ) {
   return this.findOne({ name: tagName }, 'interviews')
     .populate({
@@ -30,6 +31,9 @@ TagSchema.statics.joinInterviewsByName = function(
         sort: { createdAt: -1 },
         skip: offsetNum,
       },
+      match: {
+          $or: [{question:{ $regex: searchData, $options: "i" }}]
+      }
     })
     .orFail(new NotFoundError(NOT_FOUND_TAG));
 };
