@@ -77,7 +77,6 @@ describe('[Transformer] interviewTransformer Test', () => {
         },
       ],
       links: {
-        prev: `${API}/interviews?tag=tag&search=search&offset=0&limit=4`,
         next: `${API}/interviews?tag=tag&search=search&offset=7&limit=4`,
       },
     };
