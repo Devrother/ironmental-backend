@@ -3,9 +3,10 @@ import Joi from '@hapi/joi';
 const { API_VERSION } = process.env;
 
 const interviewsQuerySchema = Joi.object({
-  tag: Joi.string().regex(/^[a-zA-Z]+$/),
+  tag: Joi.string().regex(/^[a-zA-Z0-9]+$/),
   limit: Joi.number().integer(),
-  offset: Joi.number().integer()
+  offset: Joi.number().integer(),
+  search: Joi.string().allow('')
 });
 
 const emailSchema = Joi.object({

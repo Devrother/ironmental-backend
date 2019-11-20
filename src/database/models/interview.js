@@ -33,15 +33,18 @@ InterviewSchema.statics.findInterviewById = function(id) {
     .orFail(new NotFoundError(NOT_FOUND_INTERVIEW));
 };
 
-InterviewSchema.statics.findWithPagination = function(skipNum, limitNum) {
+InterviewSchema.statics.findWithPagination = function(skipNum, limitNum, searchData) {
   return this.find()
+    .or([
+      { question: { $regex: searchData, $options: "i" }}])
     .skip(skipNum)
     .limit(limitNum)
     .sort('-createdAt');
 };
 
-InterviewSchema.statics.getInterviewsCnt = function() {
-  return this.countDocuments();
+InterviewSchema.statics.getInterviewsCnt = function(searchData) {
+  return this.countDocuments().or([
+      { question: { $regex: searchData, $options: "i" }}]);
 };
 
 export default mongoose.model('Interview', InterviewSchema);

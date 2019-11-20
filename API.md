@@ -19,6 +19,8 @@ Returns json datas about all interviews.
     `limit: number = 4`
 
     `offset: number = 0`
+    
+    `search: string = "vue"`
 
 * **Data Params**
 
@@ -56,7 +58,6 @@ Returns json datas about all interviews.
             },
         ],
         "links": {
-            "prev": null,
             "next": "https://api.ironmental.net/interviews?tag={tag}&limit=4&offset=4"
         }
     }
